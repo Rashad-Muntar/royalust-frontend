@@ -1,11 +1,10 @@
 "use client";
 import React from "react";
 import { Formik } from "formik";
-import SignupSchema from "@/app/utils/authValidation";
-import signupService from "@/app/api/auth";
+import { SignupSchema } from "@/app/utils/authValidation";
+import { signupService } from "@/app/api/auth";
 import Input from "../share/Input";
 import Button from "../share/Button";
-import { type } from "os";
 
 const Signup = () => (
   <div>
@@ -13,6 +12,7 @@ const Signup = () => (
       initialValues={{ username: "", email: "", password: "" }}
       validationSchema={SignupSchema}
       onSubmit={async (values) => {
+        console.log(values);
         try {
           const response = await signupService({
             username: values.username,
@@ -33,7 +33,6 @@ const Signup = () => (
         handleBlur,
         handleSubmit,
         isSubmitting,
-        /* and other goodies */
       }) => (
         <form
           onSubmit={handleSubmit}
@@ -64,9 +63,6 @@ const Signup = () => (
           />
           {errors.password && touched.password && errors.password}
           <Button type="submit" text="Sign up" disabled={isSubmitting} />
-          {/* <button type="submit" disabled={isSubmitting}>
-            Submit
-          </button> */}
         </form>
       )}
     </Formik>
