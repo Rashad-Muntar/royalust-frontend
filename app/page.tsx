@@ -1,6 +1,8 @@
 import Image from 'next/image'
+import { getUserInfo } from './api/user'
 
-export default function Home() {
+const Home = async () => {
+  const userInfo = await getUserInfo()
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
 
@@ -10,3 +12,5 @@ export default function Home() {
     </main>
   )
 }
+
+export default Home
