@@ -4,12 +4,15 @@ import { Formik } from "formik";
 import Cookies from "js-cookie";
 import { LoginSchema } from "@/app/utils/authValidation";
 import { loginService } from "@/app/api/auth";
+import { userId } from "@/redux/features/userReducer";
+import { useDispatch } from "react-redux";
 import Input from "../share/Input";
 import Button from "../share/Button";
 import { useRouter } from "next/navigation";
 
 const Login = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   return (
     <div>
       <Formik
@@ -21,12 +24,16 @@ const Login = () => {
               email: values.email,
               password: values.password,
             });
+            
+            if(response?.data?.accessToken === undefined) throw new Error("Something went wrong")
             let currentTime = new Date();
             currentTime.setMinutes(currentTime.getMinutes() + 14);
             let accessTokenExpireDate = currentTime.toUTCString();
-            Cookies.set("accessToken", response?.data?.token, {
+            Cookies.set("accessToken", response?.data?.accessToken, {
               expires: new Date(accessTokenExpireDate),
             });
+            Cookies.set("refreshToken", response?.data?.user.refreshToken);
+            dispatch(userId(response?.data?.user?._id))
             router.push("/");
             return response;
           } catch (error: any) {

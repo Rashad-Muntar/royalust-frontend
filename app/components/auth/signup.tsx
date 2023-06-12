@@ -15,7 +15,6 @@ const Signup = () => {
         initialValues={{ username: "", email: "", password: "" }}
         validationSchema={SignupSchema}
         onSubmit={async (values) => {
-          console.log(values);
           try {
             const response = await signupService({
               username: values.username,
