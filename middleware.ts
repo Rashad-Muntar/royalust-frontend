@@ -31,7 +31,7 @@ export const middleware = async (req: NextRequest) => {
   const path = req.nextUrl.pathname;
   let accessToken = cookies.get("accessToken")?.value;
   let refresh = cookies.get("refreshToken")?.value;
-  if (!accessToken && !refresh && path !== "/auth/login") {
+  if ((!accessToken && !refresh) && (path !== "/auth/login" && path !== "/auth/signup")) {
     return NextResponse.redirect(new URL("/auth/login", req.url));
   } else if (accessToken) {
     const TokenArray = accessToken?.split(" ");

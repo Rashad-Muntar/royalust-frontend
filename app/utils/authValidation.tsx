@@ -19,5 +19,12 @@ const LoginSchema = Yup.object().shape({
     .max(15, "Too Long!")
     .required("Required"),
 });
+const updateProfileSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Required"),
+  username: Yup.string()
+    .min(2, "Too Short!")
+    .max(20, "Too Long!")
+    .required("Required"),
+});
 
-export {SignupSchema, LoginSchema};
+export { SignupSchema, LoginSchema, updateProfileSchema };

@@ -5,12 +5,17 @@ import { SignupSchema } from "@/app/utils/authValidation";
 import { signupService } from "@/app/api/auth";
 import Input from "../share/Input";
 import Button from "../share/Button";
+import Link from "next/link";
+import AuthContainer from "./container";
 import { useRouter } from "next/navigation";
 
 const Signup = () => {
   const router = useRouter();
   return (
-    <div>
+    <AuthContainer
+      heading="SIGN UP"
+      subHeading="Join Royalust and enjoy feel of life"
+    >
       <Formik
         initialValues={{ username: "", email: "", password: "" }}
         validationSchema={SignupSchema}
@@ -39,10 +44,11 @@ const Signup = () => {
         }) => (
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col border-2 justify-center"
+            className="flex flex-col justify-center"
           >
             {}
             <Input
+              placeholder="Enter your username"
               type="text"
               name="username"
               onChange={handleChange}
@@ -50,6 +56,7 @@ const Signup = () => {
               value={values.username}
             />
             <Input
+              placeholder="Enter your email"
               type="email"
               name="email"
               onChange={handleChange}
@@ -58,6 +65,7 @@ const Signup = () => {
             />
             {errors.email && touched.email && errors.email}
             <Input
+              placeholder="Enter your password"
               type="password"
               name="password"
               onChange={handleChange}
@@ -65,11 +73,22 @@ const Signup = () => {
               value={values.password}
             />
             {errors.password && touched.password && errors.password}
-            <Button type="submit" text="Sign up" disabled={isSubmitting} />
+            <Button
+              style="outline"
+              type="submit"
+              text="Sign up"
+              disabled={isSubmitting}
+            />
           </form>
         )}
       </Formik>
-    </div>
+      <div className="flex justify-center items-center mt-5">
+        <p className="mr-3 text-sm">Are you already a member?</p>
+        <Link href="/auth/login">
+          <p className="text-sky-400">Log in</p>
+        </Link>
+      </div>
+    </AuthContainer>
   );
 };
 

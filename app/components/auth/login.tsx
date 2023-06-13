@@ -4,17 +4,22 @@ import { Formik } from "formik";
 import Cookies from "js-cookie";
 import { LoginSchema } from "@/app/utils/authValidation";
 import { loginService } from "@/app/api/auth";
-import { userId } from "@/redux/features/userReducer";
+import { currentUser } from "@/redux/features/userReducer";
 import { useDispatch } from "react-redux";
+import AuthContainer from "./container";
 import Input from "../share/Input";
 import Button from "../share/Button";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   return (
-    <div>
+    <AuthContainer
+      heading="LOG IN"
+      subHeading=" Welcome back! Log in to your account to view today's progress"
+    >
       <Formik
         initialValues={{ email: "", password: "" }}
         validationSchema={LoginSchema}
@@ -24,8 +29,9 @@ const Login = () => {
               email: values.email,
               password: values.password,
             });
-            
-            if(response?.data?.accessToken === undefined) throw new Error("Something went wrong")
+
+            if (response?.data?.accessToken === undefined)
+              throw new Error("Something went wrong");
             let currentTime = new Date();
             currentTime.setMinutes(currentTime.getMinutes() + 14);
             let accessTokenExpireDate = currentTime.toUTCString();
@@ -33,7 +39,7 @@ const Login = () => {
               expires: new Date(accessTokenExpireDate),
             });
             Cookies.set("refreshToken", response?.data?.user.refreshToken);
-            dispatch(userId(response?.data?.user?._id))
+            dispatch(currentUser(response?.data?.user));
             router.push("/");
             return response;
           } catch (error: any) {
@@ -52,10 +58,11 @@ const Login = () => {
         }) => (
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col border-2 justify-center"
+            className="flex flex-col justify-center"
           >
             {}
             <Input
+              placeholder="Enter Email"
               type="email"
               name="email"
               onChange={handleChange}
@@ -64,6 +71,7 @@ const Login = () => {
             />
             {errors.email && touched.email && errors.email}
             <Input
+              placeholder="Enter Password"
               type="password"
               name="password"
               onChange={handleChange}
@@ -71,11 +79,22 @@ const Login = () => {
               value={values.password}
             />
             {errors.password && touched.password && errors.password}
-            <Button type="submit" text="Login" disabled={isSubmitting} />
+            <Button
+              style="py-[8px] mt-4 border"
+              type="submit"
+              text="Login"
+              disabled={isSubmitting}
+            />
           </form>
         )}
       </Formik>
-    </div>
+      <div className="flex justify-center items-center mt-5">
+        <p className="mr-3 text-sm">Don't have an account yet?</p>
+        <Link href="/auth/signup">
+          <p className="text-sky-400">Sign up</p>
+        </Link>
+      </div>
+    </AuthContainer>
   );
 };
 

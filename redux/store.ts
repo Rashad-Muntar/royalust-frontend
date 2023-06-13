@@ -3,7 +3,7 @@ import userReducer from "./features/userReducer";
 
 export const store = configureStore({
   reducer: {
-    userId: userReducer,
+    user: userReducer,
   },
   devTools: process.env.NODE_ENV !== "production",
 });

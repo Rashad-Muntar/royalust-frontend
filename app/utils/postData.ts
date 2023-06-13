@@ -1,8 +1,11 @@
-const postData = async (url: string, data: any, options?: RequestInit) => {
-    const requestOptions: RequestInit = {
-      method: "POST",
+import Cookies from "js-cookie";
+const postData = async (url: string, data: any, method:string, options?: RequestInit) => {
+
+  const requestOptions: RequestInit = {
+      method: method,
       headers: {
         "Content-Type": "application/json",
+        'Authorization': Cookies.get('accessToken') || '' 
       },
       body: JSON.stringify(data),
       ...options,

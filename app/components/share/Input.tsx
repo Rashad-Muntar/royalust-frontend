@@ -4,12 +4,14 @@ interface Props {
   type: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur: (e: ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
   name?: string;
   value: string;
 }
-const Input = ({ type, onChange, onBlur, name, value }: Props) => {
+const Input = ({ type, onChange, onBlur, name, value, placeholder }: Props) => {
   return (
     <input
+    placeholder={placeholder}
       type={type}
       name={name}
       onChange={onChange}
