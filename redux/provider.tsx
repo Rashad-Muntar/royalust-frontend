@@ -1,8 +1,13 @@
 "use client";
-
-import { store } from "./store";
+import Spinner from "@/app/components/share/spinner";
+import { store, persistor } from "./store";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
-export function Providers({ children }: { children: React.ReactNode }) {
-  return <Provider store={store}>{children}</Provider>;
+export function ReduxProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <Provider store={store}>
+      <PersistGate loading={<Spinner color="white"/>} persistor={persistor}>{children}</PersistGate>
+    </Provider>
+  );
 }

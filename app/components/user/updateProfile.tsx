@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import AuthContainer from "../auth/container";
 import Input from "../share/Input";
+import Spinner from "../share/spinner";
 import Button from "../share/Button";
 import { updateProfileSchema } from "@/app/utils/authValidation";
 import { useSelector } from "react-redux";
@@ -15,7 +16,6 @@ const UpdateProfile = () => {
   console.log(currentUser)
   return (
     <AuthContainer>
-        
       <Formik
         initialValues={{ username, email }}
         validationSchema={updateProfileSchema}
