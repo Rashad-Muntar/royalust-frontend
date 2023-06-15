@@ -1,4 +1,4 @@
-# Royalust-backend
+# Royalust-Frontend
 
 > This GitHub repository contains a Next.js application that enables user authentication using a JWT (JSON Web Tokens) authentication mechanism. The app integrates with an external API built with Node.js and provides user authentication functionalities such as registration, login, access token, and refresh token management. Additionally, users can edit their profiles to customize their information.
 
