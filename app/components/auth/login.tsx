@@ -1,5 +1,7 @@
 "use client";
 import React from "react";
+import Spinner from "../share/spinner";
+import { useState } from "react";
 import { Formik } from "formik";
 import Cookies from "js-cookie";
 import { LoginSchema } from "@/app/utils/authValidation";
@@ -15,15 +17,17 @@ import Link from "next/link";
 const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <AuthContainer
       heading="LOG IN"
-      subHeading=" Welcome back! Log in to your account to view today's progress"
+      subHeading=" Welcome back! Log in to your account to enjoy the feel of life"
     >
       <Formik
         initialValues={{ email: "", password: "" }}
         validationSchema={LoginSchema}
         onSubmit={async (values) => {
+          setIsLoading(true);
           try {
             const response = await loginService({
               email: values.email,
@@ -39,7 +43,9 @@ const Login = () => {
               expires: new Date(accessTokenExpireDate),
             });
             Cookies.set("refreshToken", response?.data?.user.refreshToken);
+            Cookies.set("email", response?.data?.user.email);
             dispatch(currentUser(response?.data?.user));
+            setIsLoading(false);
             router.push("/");
             return response;
           } catch (error: any) {
@@ -82,7 +88,7 @@ const Login = () => {
             <Button
               style="py-[8px] mt-4 border"
               type="submit"
-              text="Login"
+              text={isLoading ? <Spinner color="white" height="26" width="26"/> : "Login"}
               disabled={isSubmitting}
             />
           </form>

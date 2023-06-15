@@ -3,7 +3,9 @@ import React from "react";
 import { Formik } from "formik";
 import { SignupSchema } from "@/app/utils/authValidation";
 import { signupService } from "@/app/api/auth";
+import { useState } from "react";
 import Input from "../share/Input";
+import Spinner from "../share/spinner";
 import Button from "../share/Button";
 import Link from "next/link";
 import AuthContainer from "./container";
@@ -11,25 +13,27 @@ import { useRouter } from "next/navigation";
 
 const Signup = () => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <AuthContainer
       heading="SIGN UP"
-      subHeading="Join Royalust and enjoy feel of life"
+      subHeading="Join Royalust. This is life beyond the norm"
     >
       <Formik
         initialValues={{ username: "", email: "", password: "" }}
         validationSchema={SignupSchema}
         onSubmit={async (values) => {
+          setIsLoading(true);
           try {
-            const response = await signupService({
+            await signupService({
               username: values.username,
               email: values.email,
               password: values.password,
             });
+            setIsLoading(false);
             router.push("/auth/login");
-            return response;
           } catch (error: any) {
-            throw new Error(error.message);
+            return error.message;
           }
         }}
       >
@@ -76,7 +80,7 @@ const Signup = () => {
             <Button
               style="outline"
               type="submit"
-              text="Sign up"
+              text={isLoading ? <Spinner color="white" height="40" width="40"/> : "Sign up"}
               disabled={isSubmitting}
             />
           </form>

@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
+import Cookies from "js-cookie";
 
 const TOKEN_REFRESH_INTERVAL = 14 * 60 * 1000; // Refresh token every 14 minutes
 
-const refreshToken = async (refreshToken: string) => {
+const refreshToken = async (email: string) => {
   try {
     const response = await fetch("http://localhost:4000/api/refresh", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ refreshToken }),
+      body: JSON.stringify({ email }),
     });
 
     if (!response.ok) {
@@ -18,8 +18,7 @@ const refreshToken = async (refreshToken: string) => {
     }
 
     const data = await response.json();
-    const { accessToken } = data;
-    return accessToken;
+    return data.data;
   } catch (error) {
     console.error("Token refresh failed:", error);
     throw new Error("Token refresh failed");
@@ -31,31 +30,31 @@ export const middleware = async (req: NextRequest) => {
   const path = req.nextUrl.pathname;
   let accessToken = cookies.get("accessToken")?.value;
   let refresh = cookies.get("refreshToken")?.value;
-  if ((!accessToken && !refresh) && (path !== "/auth/login" && path !== "/auth/signup")) {
+  if (
+    refresh &&
+    accessToken &&
+    (path === "/auth/login" || path === "/auth/signup")
+  ) {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+  if (
+    !accessToken &&
+    !refresh &&
+    path !== "/auth/login" &&
+    path !== "/auth/signup"
+  ) {
     return NextResponse.redirect(new URL("/auth/login", req.url));
-  } else if (accessToken) {
-    const TokenArray = accessToken?.split(" ");
+  } else
     try {
-      const exp: any = jwt.decode(TokenArray[1]);
-      if (exp * 1000 - Date.now() <= TOKEN_REFRESH_INTERVAL) {
-        const refreshTokenValue = cookies.get("refreshToken")?.value;
-        if (refreshTokenValue) {
-          const newAccessToken = await refreshToken(refreshTokenValue);
-          cookies.set("accessToken", newAccessToken);
-        }
+      const refreshTokenValue = cookies.get("refreshToken")?.value;
+      const email: any = cookies.get("email")?.value;
+      if (refreshTokenValue) {
+        const newAccessToken = await refreshToken(email);
+        cookies.set("accessToken", newAccessToken);
       }
     } catch (error: any) {
       return error.message;
     }
-  }
-  if (
-    accessToken &&
-    refresh &&
-    (path === "/auth/login" || path === "/auth/signup")
-  ) {
-    console.log(accessToken);
-    return NextResponse.redirect(new URL("/", req.url));
-  }
   return NextResponse.next();
 };
 

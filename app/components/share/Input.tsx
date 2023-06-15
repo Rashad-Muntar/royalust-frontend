@@ -17,7 +17,7 @@ const Input = ({ type, onChange, onBlur, name, value, placeholder }: Props) => {
       onChange={onChange}
       onBlur={onBlur}
       value={value}
-      className="border-2 text-black border-gray-300 rounded-lg p-2 w-80 mb-2"
+      className="border-2 text-black border-gray-300 rounded-lg p-2 w-[100%] mb-2"
     />
   );
 };
