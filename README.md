@@ -1,34 +1,51 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Royalust-Frontend
+
+> This GitHub repository contains a Next.js application that enables user authentication using a JWT (JSON Web Tokens) authentication mechanism. The app integrates with an external API built with Node.js and provides user authentication functionalities such as registration, login, access token, and refresh token management. Additionally, users can edit their profiles to customize their information.
+
+
+## Sneak peak
+
+![Screenshot 2023-06-14 at 6 42 34 PM](https://github.com/Rashad-Muntar/royalust-frontend/assets/58520480/9bf1df7b-1232-4131-b631-78ff8782d495)
+![Screenshot 2023-06-14 at 6 44 15 PM](https://github.com/Rashad-Muntar/royalust-frontend/assets/58520480/c4875820-4368-4341-87b3-72294d6a6daa)
+![Screenshot 2023-06-14 at 6 49 02 PM](https://github.com/Rashad-Muntar/royalust-frontend/assets/58520480/69e6dd93-2f4b-4472-a5a9-7a37f81a3b86)
+
+
+## Built With
+- Next.js
+- Typescript
+- Redux
+- Redux persist
+- Formik
+
+## Prerequisites
+
+  - Internet Connection
+  - Web Browser
+  - Code Editor 
+  - Node Package Manager (NPM)
+  - Clone the [Square-api](https://github.com/Rashad-Muntar/Royalust-backend) repo
 
 ## Getting Started
 
-First, run the development server:
+- Open your terminal 
+  - Windows: `Win + R`, then type `cmd` | Mac: `Command + space`, then type `Terminal`| Linux: `Ctrl + Alt`
+- Navigate to a directory of your choosing using the `cd` command (e.g: cd my-directory/)
+- Run this command in your OS terminal: `git clone https://github.com/Rashad-Muntar/royalust-frontend` to get a copy of the project.
+- Navigate to the project's directory using the `cd` command
+- Run `npm i` or `yarn` to install all dependencies
+- Run `yarn dev or `npm run dev`
+    - NOTE: Before the app will be able to communicate with the backend you will need to clone the backend code and run the server following the descripption giving on how to run the server.
+- From within the project directory run `npm start` to start a local server in your web browser.
+- 
+- Available Paths:
+  - Visit `http://localhost:3000/` for Home view which is a protected route. You will be redirected initially to login if you haven't
+  - Visit `http://localhost:3000/auth/login` to login
+  - Visit `http://localhost:3000/auth/signup` to register as a new client.
+    - When signup is successful, you will be redirected to the login page to login with your credentials.
+-You will be able to edit your profile after you are able to sign up and and login successfully,
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+👤 **Rashad Muntar**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- GitHub: [@Rashad-Muntar](https://github.com/Rashad-Muntar)
+- Twitter - [@RashadToure](https://twitter.com/RashadToure)
+- LinkedIn: [Rashad Muntar](https://www.linkedin.com/in/rashad-muntar/)
