@@ -27,7 +27,7 @@ const Navbar = () => {
     router.push("/auth/login");
   };
   return (
-    <div className="bg-white px-20 h-[50px] w-full text-black flex justify-between  items-center">
+    <div className="bg-white lg:px-20 md:px15 sm:px-10 md- h-[50px] w-full text-black flex justify-between  items-center">
       <div>
         <Link href="/">Royalust</Link>
       </div>

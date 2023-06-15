@@ -1,19 +1,19 @@
 import { Formik } from "formik";
-import { ReactNode } from "react";
-import { useEffect, useState } from "react";
 import AuthContainer from "../auth/container";
+import { useState } from "react";
 import Input from "../share/Input";
 import Spinner from "../share/spinner";
 import Button from "../share/Button";
 import { updateProfileSchema } from "@/app/utils/authValidation";
 import { useSelector } from "react-redux";
-import { updateProfile, getUserInfo } from "@/app/api/user";
+import { updateProfile } from "@/app/api/user";
 
 const UpdateProfile = () => {
   const currentUser = useSelector((state: any) => state.user?.currentUser);
   const username:string = currentUser?.username
+  const [isLoading, setIsLoading] = useState(false);
   const email:string = currentUser?.email
-  console.log(currentUser)
+
   return (
     <AuthContainer>
       <Formik
@@ -21,14 +21,14 @@ const UpdateProfile = () => {
         validationSchema={updateProfileSchema}
         enableReinitialize={true}
         onSubmit={async (values) => {
-            console.log(values)
+            setIsLoading(true);
           try {
-            const response = await updateProfile({
+             await updateProfile({
               id: currentUser._id,
               username: values?.username,
               email: values?.email,
             });
-            return response;
+            setIsLoading(false);
           } catch (error: any) {
             return error.message;
           }
@@ -45,7 +45,7 @@ const UpdateProfile = () => {
         }) => (
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col justify-center"
+            className="flex flex-col justify-center w-[100%] items-center"
           >
             {}
             <Input
@@ -68,7 +68,7 @@ const UpdateProfile = () => {
             <Button
               style="py-[10px] mt-4 bg-primaryBlack text-primaryWhite"
               type="submit"
-              text="Update Profile"
+              text={ isLoading ? <Spinner color="white" width="26" height="26"/> : "Update Profile"}
               disabled={isSubmitting}
             />
           </form>

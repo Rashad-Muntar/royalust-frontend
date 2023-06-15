@@ -1,3 +1,9 @@
-const settingsBtns = ["Profile", "Password", "Billing", "Subscription", "Usage"];
+const settingsBtns = [
+  "Profile",
+  "Password",
+  "Billing",
+  "Subscription",
+  "Usage",
+];
 
-export {settingsBtns}
+export { settingsBtns };
